@@ -2345,8 +2345,9 @@ end
 
 --Script should scan through each item, and if rebalances are enabled, it'll do all of them; otherwise only do mandatory additions
 --Not currently enabled, but would just need to be uncommented in theory.
+local rebalance = ModSettingGet( "Apotheosis.spellrebalances" )
 for i=1,#actions do -- fast as fuck boi
-    if actions_to_edit[actions[i].id] and (ModSettingGet( "Apotheosis.spellrebalances" ) or actions_to_edit[actions[i].id].mandatory_addition) then
+    if actions_to_edit[actions[i].id] and (actions_to_edit[actions[i].id].mandatory_addition or rebalance) then
         for key, value in pairs(actions_to_edit[actions[i].id]) do
             actions[i][key] = value
         end
