@@ -57,7 +57,7 @@ local lines = {
   " ",
   " ",
   " ",
-  "Secret Codes:"
+  "Secret Codes:",
   "hardcore",
   "towerclimb",
   "missingmagic",

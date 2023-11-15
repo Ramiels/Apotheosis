@@ -61,6 +61,7 @@ watermage
 apotheosis_blob_boss
 weaken_NOT
 cast_share
+graham_speech_text
 
 Note: Readthrough vanilla changes and remove any notes before release
 

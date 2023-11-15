@@ -42,9 +42,8 @@ function Speak(entity, text, pool)
 
     -- here lies some terrible width code that has since been replaced
     -- thank you to Evaisa (and Copi) for making this not trash
-    local gui = GuiCreate()
     GuiStartFrame(gui)
-    local offset_x = GuiGetTextDimensions( gui, text, size_x ) * 0.75
+    local offset_x = GuiGetTextDimensions( GuiCreate(), text, size_x ) * 0.75
     GuiDestroy(gui)
 
     EntityAddTag(entity, "graham_speaking")

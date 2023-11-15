@@ -1,7 +1,7 @@
 dofile("data/scripts/lib/mod_settings.lua")
 
 ---@diagnostic disable-next-line: lowercase-global
-function mod_setting_change_callback( mod_id, gui, in_main_menu, setting, old_value, new_value  )
+function mod_setting_change_callback( mod_id, gui, in_main_menu, setting, old_value, new_value	)
 	print( tostring(new_value) )
 end
 
@@ -47,40 +47,157 @@ local exp_poly_desc = "Are Apotheosis Creatures added to the chaotic polymorph p
 local spellrebalances_name = "Spell Reworks"
 local spellrebalances_desc = "Reworks various spells to have reduced mana costs to make them more practical.\nAlso reworks piercing, chainsaw & music note spells to be more inline with vanilla's spell balance.\nApotheosis is designed around this being enabled.\n \nThis setting is experimental."
 
+local keybind_setting_curr = "In-Game Keybind: "
+local keybind_setting_next = "Changed Keybind: "
 
-  --Russian Translations
+	--Russian Translations
 if currentLang == "русский" then
 
-  congacat_cat_immortal_name = "Бессмертие кошек"
-  congacat_cat_immortal_desc = "Являются ли кошки бессмертными?"
-  fairy_immortality_name = "Бессмертие фей"
-  fairy_immortality_desc = "Являются ли Кейдзю бессмертными?"
-  motd_setting_name = "Сообщение дня"
-  motd_setting_desc = "Будет ли сообщение дня отображаться в начале каждого забега? \nМожет содержать бонусные подсказки с различными секретами."
-  seasonal_events_name = "Сезонные праздники"
-  seasonal_events_desc = "Включены ли сезонные праздники? \nНапример, Хэллоуин, день рождения мода Apotheosis и т.д."
-  boss_health_multiplayer_name = "Множитель здоровья босса"
-  boss_health_multiplayer_formatting = " $0% ОЗ"
-  boss_health_multiplayer_desc = "Умножает здоровье всех боссов на это количество. \nДля тех, кто ищет особо стойких противников. \nНе влияет на Колмисильмяна \nМини-боссы также будут иметь частичное увеличение здоровья. \nЭто можно изменить в середине игры, но не для всех боссов, \n не забудьте перезапустить игру после обновления множителя.\n \nДля создателей модов: \nЕсли ваш мод не указан в разделе совместимости на странице \n модов, это скорее всего не поможет, вам придётся добавить \n lua-компонент кода к вашим боссам. \nНе стесняйтесь обращаться ко мне за инструкциями или \n помощью, если это необходимо. \nМне будет проще всего ответить вам в \n Discord, Conga Lyne#2452. [ТОЛЬКО НА АНГЛИЙСКОМ]"
-  particle_reduction_name = "Минимум частиц"
-  particle_reduction_desc = "Уменьшить количество частиц, создаваемых некоторыми заклинаниями. \nЭто поможет уменьшить задержку, если ваш компьютер достигает предела."
-  spoopy_graphics_name = "Альтернативная графика"
-  spoopy_graphics_desc = "Эта настройка включает альтернативную графику некоторых существ, созданных Spoopy. \nЭта настройка выключена по умолчанию, но может быть включена здесь."
+	congacat_cat_immortal_name = "Бессмертие кошек"
+	congacat_cat_immortal_desc = "Являются ли кошки бессмертными?"
+	fairy_immortality_name = "Бессмертие фей"
+	fairy_immortality_desc = "Являются ли Кейдзю бессмертными?"
+	motd_setting_name = "Сообщение дня"
+	motd_setting_desc = "Будет ли сообщение дня отображаться в начале каждого забега? \nМожет содержать бонусные подсказки с различными секретами."
+	seasonal_events_name = "Сезонные праздники"
+	seasonal_events_desc = "Включены ли сезонные праздники? \nНапример, Хэллоуин, день рождения мода Apotheosis и т.д."
+	boss_health_multiplayer_name = "Множитель здоровья босса"
+	boss_health_multiplayer_formatting = " $0% ОЗ"
+	boss_health_multiplayer_desc = "Умножает здоровье всех боссов на это количество. \nДля тех, кто ищет особо стойких противников. \nНе влияет на Колмисильмяна \nМини-боссы также будут иметь частичное увеличение здоровья. \nЭто можно изменить в середине игры, но не для всех боссов, \n не забудьте перезапустить игру после обновления множителя.\n \nДля создателей модов: \nЕсли ваш мод не указан в разделе совместимости на странице \n модов, это скорее всего не поможет, вам придётся добавить \n lua-компонент кода к вашим боссам. \nНе стесняйтесь обращаться ко мне за инструкциями или \n помощью, если это необходимо. \nМне будет проще всего ответить вам в \n Discord, Conga Lyne#2452. [ТОЛЬКО НА АНГЛИЙСКОМ]"
+	particle_reduction_name = "Минимум частиц"
+	particle_reduction_desc = "Уменьшить количество частиц, создаваемых некоторыми заклинаниями. \nЭто поможет уменьшить задержку, если ваш компьютер достигает предела."
+	spoopy_graphics_name = "Альтернативная графика"
+	spoopy_graphics_desc = "Эта настройка включает альтернативную графику некоторых существ, созданных Spoopy. \nЭта настройка выключена по умолчанию, но может быть включена здесь."
 
-  seasonal_forced_name = "Запустить сезонные праздники"
-  seasonal_forced_desc = "Список сезонных праздников, которые можно принудительно запустить"
-  seasonal_forced_april_fools_name = "Запустить день смеха"
-  seasonal_forced_april_fools_desc = "Включен ли принудительно праздник дурака?"
-  seasonal_forced_birthday_name = "Запустить день рождения"
-  seasonal_forced_birthday_desc = "Включен ли принудительно праздник дня рождения мода Apotheosis?"
-  seasonal_forced_halloween_name = "Запустить Хэллоуин"
-  seasonal_forced_halloween_desc = "Включен ли принудительно Хэллоуин?"
-  seasonal_forced_smissmass_name = "Запустить Шмождество"
-  seasonal_forced_smissmass_desc = "Включен ли принудительно праздник Шмождества?"
-  secret_golden_cape_name = "Золотая накидка"
-  secret_golden_cape_desc = "Включен ли аксессуар в виде золотой накидки? \nНекоторые могут захотеть выключить его, если используют пользовательские моды на персонажа."
+	seasonal_forced_name = "Запустить сезонные праздники"
+	seasonal_forced_desc = "Список сезонных праздников, которые можно принудительно запустить"
+	seasonal_forced_april_fools_name = "Запустить день смеха"
+	seasonal_forced_april_fools_desc = "Включен ли принудительно праздник дурака?"
+	seasonal_forced_birthday_name = "Запустить день рождения"
+	seasonal_forced_birthday_desc = "Включен ли принудительно праздник дня рождения мода Apotheosis?"
+	seasonal_forced_halloween_name = "Запустить Хэллоуин"
+	seasonal_forced_halloween_desc = "Включен ли принудительно Хэллоуин?"
+	seasonal_forced_smissmass_name = "Запустить Шмождество"
+	seasonal_forced_smissmass_desc = "Включен ли принудительно праздник Шмождества?"
+	secret_golden_cape_name = "Золотая накидка"
+	secret_golden_cape_desc = "Включен ли аксессуар в виде золотой накидки? \nНекоторые могут захотеть выключить его, если используют пользовательские моды на персонажа."
 
 end
+
+
+local translations = {
+	["English"] = {
+		congacat_cat_immortal_name = "Cat immortality",
+		congacat_cat_immortal_desc = "Are cats immortal?",
+		fairy_immortality_name = "Fairy immortality",
+		fairy_immortality_desc = "Are Keiju immortal?",
+		motd_setting_name = "Message of the Day",
+		motd_setting_desc = "Will a MOTD be displayed at the start of each run? \nMay contain bonus hints for various secrets.",
+		seasonal_events_name = "Seasonal Events",
+		seasonal_events_desc = "Are seasonal events enabled? \nFor example, Halloween, More Creep's Birthday, etc.",
+		boss_health_multiplayer_name = "Boss Health Multiplier",
+		boss_health_multiplayer_formatting = " $0% HP",
+		boss_health_multiplayer_desc = "Multiply all Bosses health by this much. \nFor those who seek extra durable opponents. \nDoes not affect Kolmisilma \nMinibosses will also have their health boosted by a partial amount. \n \nFor Modders: \nIf your mod isn't listed in the compatibility section of the mod page, \nthis likely won't boost it, you'll need to add a lua component to your bosses. \nDo not hesitate to contact me for instructions or help if needed. \nIt would be easiest for me to respond to you on discord, Conga Lyne#2452",
+		particle_reduction_name = "Minimal Particles",
+		particle_reduction_desc = "Reduce the number of particles spawned by certain spells. \nThis should help reduce lag if your computer's reaching it's limit.",
+		spoopy_graphics_name = "Alternate Graphics",
+		spoopy_graphics_desc = "This setting toggles the alternate graphics of some creeps made by Spoopy. \nThis setting is turned off by default but can be enabled here.",
+		custom_seed_name = "Set Custom Seed",
+		custom_seed_desc = "Set a custom seed for the run. \nFor example: 0948274926, or hardcore", --Sneak in some secret seeds here "PuppyDogs"? --Hardmode? Towerclimb?
+		organised_icons_name = "Organise Icons",
+		organised_icons_desc = "Will Spells & Perks be organised with the vanilla perk list? \n \nFor example, if this is enabled, an immunity related perk will appear next to other \nimmunity perks in the progress log rather than at the bottom of the perk list. \nThe same applies to spells and creature icons.",
+		seasonal_forced_name = "Forced Seasonal Events,",
+		seasonal_forced_desc = "A list of Seasonal Events which can be forced",
+		seasonal_forced_april_fools_name = "Forced April Fools",
+		seasonal_forced_april_fools_desc = "Is the April Fools holiday forcefully enabled?",
+		seasonal_forced_birthday_name = "Forced Birthday",
+		seasonal_forced_birthday_desc = "Is the Apotheosis Birthday holiday forcefully enabled?",
+		seasonal_forced_halloween_name = "Forced Halloween",
+		seasonal_forced_halloween_desc = "Is Halloween forcefully enabled?",
+		seasonal_forced_smissmass_name = "Forced Smissmass",
+		seasonal_forced_smissmass_desc = "Is the Smissmass holiday forcefully enabled?",
+		secret_golden_cape_name = "Golden Cape",
+		secret_golden_cape_desc = "Is the Golden Cape cosmetic enabled? \nSome people may want to disable this if using custom character mods.",
+		keybind_setting_curr = "In-Game Keybind: ",
+		keybind_setting_next = "Changed Keybind: ",
+	},
+	["русский"] = {
+		congacat_cat_immortal_name = "Бессмертие кошек",
+		congacat_cat_immortal_desc = "Являются ли кошки бессмертными?",
+		fairy_immortality_name = "Бессмертие фей",
+		fairy_immortality_desc = "Являются ли Кейдзю бессмертными?",
+		motd_setting_name = "Сообщение дня",
+		motd_setting_desc = "Будет ли сообщение дня отображаться в начале каждого забега? \nМожет содержать бонусные подсказки с различными секретами.",
+		seasonal_events_name = "Сезонные праздники",
+		seasonal_events_desc = "Включены ли сезонные праздники? \nНапример, Хэллоуин, день рождения мода Apotheosis и т.д.",
+		boss_health_multiplayer_name = "Множитель здоровья босса",
+		boss_health_multiplayer_formatting = " $0% ОЗ",
+		boss_health_multiplayer_desc = "Умножает здоровье всех боссов на это количество. \nДля тех, кто ищет особо стойких противников. \nНе влияет на Колмисильмяна \nМини-боссы также будут иметь частичное увеличение здоровья. \nЭто можно изменить в середине игры, но не для всех боссов, \n не забудьте перезапустить игру после обновления множителя.\n \nДля создателей модов: \nЕсли ваш мод не указан в разделе совместимости на странице \n модов, это скорее всего не поможет, вам придётся добавить \n lua-компонент кода к вашим боссам. \nНе стесняйтесь обращаться ко мне за инструкциями или \n помощью, если это необходимо. \nМне будет проще всего ответить вам в \n Discord, Conga Lyne#2452. [ТОЛЬКО НА АНГЛИЙСКОМ]",
+		particle_reduction_name = "Минимум частиц",
+		particle_reduction_desc = "Уменьшить количество частиц, создаваемых некоторыми заклинаниями. \nЭто поможет уменьшить задержку, если ваш компьютер достигает предела.",
+		spoopy_graphics_name = "Альтернативная графика",
+		spoopy_graphics_desc = "Эта настройка включает альтернативную графику некоторых существ, созданных Spoopy. \nЭта настройка выключена по умолчанию, но может быть включена здесь.",
+		seasonal_forced_name = "Запустить сезонные праздники",
+		seasonal_forced_desc = "Список сезонных праздников, которые можно принудительно запустить",
+		seasonal_forced_april_fools_name = "Запустить день смеха",
+		seasonal_forced_april_fools_desc = "Включен ли принудительно праздник дурака?",
+		seasonal_forced_birthday_name = "Запустить день рождения",
+		seasonal_forced_birthday_desc = "Включен ли принудительно праздник дня рождения мода Apotheosis?",
+		seasonal_forced_halloween_name = "Запустить Хэллоуин",
+		seasonal_forced_halloween_desc = "Включен ли принудительно Хэллоуин?",
+		seasonal_forced_smissmass_name = "Запустить Шмождество",
+		seasonal_forced_smissmass_desc = "Включен ли принудительно праздник Шмождества?",
+		secret_golden_cape_name = "Золотая накидка",
+		secret_golden_cape_desc = "Включен ли аксессуар в виде золотой накидки? \nНекоторые могут захотеть выключить его, если используют пользовательские моды на персонажа.",
+	},
+	["Português (Brasil)"] = {
+
+	},
+	["Español"] = {
+
+	},
+	["Deutsch"] = {
+
+	},
+	["Français"] = {
+
+	},
+	["Italiano"] = {
+
+	},
+	["Polska"] = {
+
+	},
+	["简体中文"] = {
+
+	},
+	["日本語"] = {
+
+	},
+	["한국어"] = {
+
+	},
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 local mod_id = "Apotheosis"
 ---@diagnostic disable-next-line: lowercase-global
@@ -88,113 +205,198 @@ mod_settings_version = 1
 ---@diagnostic disable-next-line: lowercase-global
 mod_settings = 
 {
-  {
-    image_filename = "mods/Apotheosis/files/ui_gfx/interface_gfx/apotheosis_settings.png",
-    ---@diagnostic disable-next-line: undefined-global
-    ui_fn = mod_setting_image,
-  },
-  {
-    id = "congacat_cat_immortal",
-    ui_name = congacat_cat_immortal_name,
-    ui_description = congacat_cat_immortal_desc,
-    value_default = false,
-    ---@diagnostic disable-next-line: undefined-global
-    scope = MOD_SETTING_SCOPE_NEW_GAME,
-  },
-  {
-    id = "fairy_immortality",
-    ui_name = fairy_immortality_name,
-    ui_description = fairy_immortality_desc,
-    value_default = false,
-    ---@diagnostic disable-next-line: undefined-global
-    scope = MOD_SETTING_SCOPE_NEW_GAME,
-  },
-  {
-    id = "motd_setting",
-    ui_name = motd_setting_name,
-    ui_description = motd_setting_desc,
-    value_default = false,
-    ---@diagnostic disable-next-line: undefined-global
-    scope = MOD_SETTING_SCOPE_NEW_GAME,
-  },
-  {
-    id = "seasonal_events",
-    ui_name = seasonal_events_name,
-    ui_description = seasonal_events_desc,
-    value_default = true,
-    ---@diagnostic disable-next-line: undefined-global
-    scope = MOD_SETTING_SCOPE_NEW_GAME,
-  },
-  {
-    id = "boss_health_multiplayer",
-    ui_name = boss_health_multiplayer_name,
-    ui_description = boss_health_multiplayer_desc,
-    value_default = 100,
-    value_min = 100,
-    value_max = 1000,
-    value_display_multiplier = 1,
-    value_display_formatting = boss_health_multiplayer_formatting,
-    ---@diagnostic disable-next-line: undefined-global
-    scope = MOD_SETTING_SCOPE_RUNTIME,
-  },
-  --[[
-  {
-    id = "particle_reduction",
-    ui_name = particle_reduction_name,
-    ui_description = particle_reduction_desc,
-    value_default = false,
-    ---@diagnostic disable-next-line: undefined-global
-    scope = MOD_SETTING_SCOPE_RUNTIME,
-  },
-  ]]--
-  --[[
-  {
-    id = "spoopy_graphics",
-    ui_name = spoopy_graphics_name,
-    ui_description = spoopy_graphics_desc,
-    value_default = false,
-    ---@diagnostic disable-next-line: undefined-global
-    scope = MOD_SETTING_SCOPE_RUNTIME_RESTART,
-  },
-  ]]--
-  {
-    id = "organised_icons",
-    ui_name = organised_icons_name,
-    ui_description = organised_icons_desc,
-    value_default = true,
-    ---@diagnostic disable-next-line: undefined-global
-    scope = MOD_SETTING_SCOPE_NEW_GAME,
-  },
-  {
-    id = "custom_seed",
-    ui_name = custom_seed_name,
-    ui_description = custom_seed_desc,
-    value_default = "",
-    text_max_length = 30,
-    allowed_characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_0123456789/.- ",
-    ---@diagnostic disable-next-line: undefined-global
-    scope = MOD_SETTING_SCOPE_NEW_GAME,
-  },
-  {
-    id = "exp_poly",
-    ui_name = exp_poly_name,
-    ui_description = exp_poly_desc,
-    value_default = false,
-    ---@diagnostic disable-next-line: undefined-global
-    scope = MOD_SETTING_SCOPE_NEW_GAME,
-  },
-  --[[
-  ]]--
-  -- Conga: Maybe this could be handled via config file in the mods folder?
-  -- Would allow for people who really want the reworks disabled or need them to turn them off while maintaining unity everywhere else
-  {
-    id = "spellrebalances",
-    ui_name = spellrebalances_name,
-    ui_description = spellrebalances_desc,
-    value_default = true,
-    ---@diagnostic disable-next-line: undefined-global
-    scope = MOD_SETTING_SCOPE_RUNTIME_RESTART,
-  },
+	{
+		image_filename = "mods/Apotheosis/files/ui_gfx/interface_gfx/apotheosis_settings.png",
+		---@diagnostic disable-next-line: undefined-global
+		ui_fn = mod_setting_image,
+	},
+	{
+		id = "congacat_cat_immortal",
+		ui_name = congacat_cat_immortal_name,
+		ui_description = congacat_cat_immortal_desc,
+		value_default = false,
+		---@diagnostic disable-next-line: undefined-global
+		scope = MOD_SETTING_SCOPE_NEW_GAME,
+	},
+	{
+		id = "fairy_immortality",
+		ui_name = fairy_immortality_name,
+		ui_description = fairy_immortality_desc,
+		value_default = false,
+		---@diagnostic disable-next-line: undefined-global
+		scope = MOD_SETTING_SCOPE_NEW_GAME,
+	},
+	{	-- copi opinion: this should be default on
+		id = "motd_setting",
+		ui_name = motd_setting_name,
+		ui_description = motd_setting_desc,
+		value_default = false,
+		---@diagnostic disable-next-line: undefined-global
+		scope = MOD_SETTING_SCOPE_NEW_GAME,
+	},
+	{
+		id = "seasonal_events",
+		ui_name = seasonal_events_name,
+		ui_description = seasonal_events_desc,
+		value_default = true,
+		---@diagnostic disable-next-line: undefined-global
+		scope = MOD_SETTING_SCOPE_NEW_GAME,
+	},
+	{
+		id = "boss_health_multiplayer",
+		ui_name = boss_health_multiplayer_name,
+		ui_description = boss_health_multiplayer_desc,
+		value_default = 100,
+		value_min = 100,
+		value_max = 1000,
+		value_display_multiplier = 1,
+		value_display_formatting = boss_health_multiplayer_formatting,
+		---@diagnostic disable-next-line: undefined-global
+		scope = MOD_SETTING_SCOPE_RUNTIME,
+	},
+	--[[
+	{
+		id = "particle_reduction",
+		ui_name = particle_reduction_name,
+		ui_description = particle_reduction_desc,
+		value_default = false,
+		---@diagnostic disable-next-line: undefined-global
+		scope = MOD_SETTING_SCOPE_RUNTIME,
+	},
+	]]--
+	--[[
+	{
+		id = "spoopy_graphics",
+		ui_name = spoopy_graphics_name,
+		ui_description = spoopy_graphics_desc,
+		value_default = false,
+		---@diagnostic disable-next-line: undefined-global
+		scope = MOD_SETTING_SCOPE_RUNTIME_RESTART,
+	},
+	]]--
+	{
+		id = "organised_icons",
+		ui_name = organised_icons_name,
+		ui_description = organised_icons_desc,
+		value_default = true,
+		---@diagnostic disable-next-line: undefined-global
+		scope = MOD_SETTING_SCOPE_NEW_GAME,
+	},
+	{
+		id = "custom_seed",
+		ui_name = custom_seed_name,
+		ui_description = custom_seed_desc,
+		value_default = "",
+		text_max_length = 30,
+		allowed_characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_0123456789/.- ",
+		---@diagnostic disable-next-line: undefined-global
+		scope = MOD_SETTING_SCOPE_NEW_GAME,
+	},
+	{
+		id = "exp_poly",
+		ui_name = exp_poly_name,
+		ui_description = exp_poly_desc,
+		value_default = false,
+		---@diagnostic disable-next-line: undefined-global
+		scope = MOD_SETTING_SCOPE_NEW_GAME,
+	},
+	-- Conga: Maybe this could be handled via config file in the mods folder?
+	--	Would allow for people who really want the reworks disabled or need them to turn them off while maintaining unity everywhere else
+	-- Copi: The main issue with that is mod updates resetting config files, instead perhaps a password thing or a file in noita install folder/data/ which could be read?
+	{
+		id = "spellrebalances",
+		ui_name = spellrebalances_name,
+		ui_description = spellrebalances_desc,
+		value_default = true,
+		---@diagnostic disable-next-line: undefined-global
+		scope = MOD_SETTING_SCOPE_RUNTIME_RESTART,
+	},
+	-- Copi: Semi-experimental, I hope this doesn't break
+	{
+		id = "alt_fire_key",
+		ui_name = spellrebalances_name,
+		ui_description = spellrebalances_desc,
+		ui_fn = function( mod_id2, gui, in_main_menu, im_id, setting )
+			-- Setup
+			dofile("mods/apotheosis/files/scripts/spells/keycodes_custom.lua")
+			if Inputting==nil then Inputting = false end
+			local key_id = "apotheosis.alt_fire_key"
+			local func_id = "apotheosis.alt_fire_func"
+
+			local curr_key	= ModSettingGet(key_id)
+			local curr_func	= ModSettingGet(func_id)
+			if not (curr_key and curr_func) then
+				ModSettingSet(key_id, 2)
+				ModSettingSet(func_id, "InputIsMouseButtonJustDown")
+			end
+
+			if Inputting then
+				-- Detecting Inputs
+
+				local key = nil
+				local func = nil
+				do	local fn = "InputIsMouseButtonJustDown"
+					for i=1, #KeyIDs[fn] do
+						if _G[fn](KeyIDs[fn][i]) then
+							key = KeyIDs[fn][i]; func = fn; goto found_key; break
+						end
+					end
+				end
+				do	local fn = "InputIsKeyJustDown"
+					for i=1, #KeyIDs[fn] do
+						if _G[fn](KeyIDs[fn][i]) then
+							key = KeyIDs[fn][i]; func = fn; goto found_key; break
+						end
+					end
+				end
+				do	local fn = "InputIsJoystickButtonJustDown"
+					for i=1, #KeyIDs[fn] do
+						if _G[fn](0, KeyIDs[fn][i]) then
+							key = KeyIDs[fn][i]; func = fn; goto found_key; break
+						end
+					end
+				end
+
+				::found_key::
+				if key and func then
+					Inputting = false
+					ModSettingSetNextValue(key_id, key, false)
+					ModSettingSetNextValue(func_id, func, false)
+				end
+			else
+				-- Not Inputting
+				local next_key	= ModSettingGetNextValue(key_id)
+				local next_func	= ModSettingGetNextValue(func_id)
+				local unchanged = ((curr_key == next_key) and (curr_func == next_func))
+				local x_offset = math.max((GuiGetTextDimensions(gui, keybind_setting_curr)), (GuiGetTextDimensions(gui, keybind_setting_next))) + 4
+
+				-- Current key display
+				GuiLayoutBeginHorizontal(gui, 0, 0)
+					GuiColorSetForNextWidget(gui, 0.6, 0.6, 0.6, 0.8)
+					GuiText(gui, 0, 0, keybind_setting_curr)
+					GuiText(gui, 0, x_offset, KeysByID[curr_func][curr_key])
+				GuiLayoutEnd(gui)
+
+				if next_key and next_func then
+					-- Next key display
+					GuiLayoutBeginHorizontal(gui, 0, 0)
+						GuiColorSetForNextWidget(gui, 0.6, 0.6, 0.6, 0.8)
+						GuiText(gui, 0, 0, keybind_setting_next)
+						GuiText(gui, 0, x_offset, KeysByID[next_func][next_key])
+					GuiLayoutEnd(gui)
+				end
+
+				if GuiButton(gui, im_id, 0, 0, "[Rebind]") then
+					Inputting = true
+				end
+
+				GuiText(gui, 0, 0, unchanged and "All good to go!" or "Changes will apply after the game re-initializes.")
+			end
+
+		end,
+		---@diagnostic disable-next-line: undefined-global
+		scope = MOD_SETTING_SCOPE_RUNTIME_RESTART,
+	},
 }
 
 --statue settings unlocks
@@ -215,112 +417,112 @@ local flags_statues = {
 	"apotheosis_misc_pandora_chest_rain",
 	"apotheosis_card_unlocked_boss_fire_lukki",
 	"apotheosis_card_unlocked_secret_knowledge_of_kings",
-  --Apotheosis
-  "apotheosis_card_unlocked_boss_monolith",
-  "apotheosis_card_unlocked_boss_flesh_monster",
-  "apotheosis_card_unlocked_challenge_towerclimb_win",
-  "apotheosis_card_unlocked_challenge_missingmagic_win",
-  "apotheosis_card_unlocked_challenge_hardcore_win",
-  
+	--Apotheosis
+	"apotheosis_card_unlocked_boss_monolith",
+	"apotheosis_card_unlocked_boss_flesh_monster",
+	"apotheosis_card_unlocked_challenge_towerclimb_win",
+	"apotheosis_card_unlocked_challenge_missingmagic_win",
+	"apotheosis_card_unlocked_challenge_hardcore_win",
+	
 }
 
 for i=1, #flags_statues do
-    if HasFlagPersistent(flags_statues[i]) then
-        statue_count = statue_count + 1
-    end
+	if HasFlagPersistent(flags_statues[i]) then
+		statue_count = statue_count + 1
+	end
 end
 
 
 --Forced Seasonal Event Settings, only unlocked after attaining at least 8 statues
 
 if statue_count >= 8 then
-  table.insert(mod_settings,
-  {
-    category_id = "seasonal_events_forced",
-    ui_name = seasonal_forced_name,
-    ui_description = seasonal_forced_desc,
-    foldable = true,
-    _folded = true,
-    settings = {
-      {
-        id = "seasonal_events_forced_april_fools",
-        ui_name = seasonal_forced_april_fools_name,
-        ui_description = seasonal_forced_april_fools_desc,
-        value_default = false,
-        ---@diagnostic disable-next-line: undefined-global
-        scope = MOD_SETTING_SCOPE_NEW_GAME,
-      },
-      {
-        id = "seasonal_events_forced_birthday",
-        ui_name = seasonal_forced_birthday_name,
-        ui_description = seasonal_forced_birthday_desc,
-        value_default = false,
-        ---@diagnostic disable-next-line: undefined-global
-        scope = MOD_SETTING_SCOPE_NEW_GAME,
-      },
-      {
-        id = "seasonal_events_forced_halloween",
-        ui_name = seasonal_forced_halloween_name,
-        ui_description = seasonal_forced_halloween_desc,
-        value_default = false,
-        ---@diagnostic disable-next-line: undefined-global
-        scope = MOD_SETTING_SCOPE_NEW_GAME,
-      },
-      {
-        id = "seasonal_events_forced_smissmass",
-        ui_name = seasonal_forced_smissmass_name,
-        ui_description = seasonal_forced_smissmass_desc,
-        value_default = false,
-        ---@diagnostic disable-next-line: undefined-global
-        scope = MOD_SETTING_SCOPE_NEW_GAME,
-      }
-    }
-  })
+	table.insert(mod_settings,
+	{
+		category_id = "seasonal_events_forced",
+		ui_name = seasonal_forced_name,
+		ui_description = seasonal_forced_desc,
+		foldable = true,
+		_folded = true,
+		settings = {
+			{
+				id = "seasonal_events_forced_april_fools",
+				ui_name = seasonal_forced_april_fools_name,
+				ui_description = seasonal_forced_april_fools_desc,
+				value_default = false,
+				---@diagnostic disable-next-line: undefined-global
+				scope = MOD_SETTING_SCOPE_NEW_GAME,
+			},
+			{
+				id = "seasonal_events_forced_birthday",
+				ui_name = seasonal_forced_birthday_name,
+				ui_description = seasonal_forced_birthday_desc,
+				value_default = false,
+				---@diagnostic disable-next-line: undefined-global
+				scope = MOD_SETTING_SCOPE_NEW_GAME,
+			},
+			{
+				id = "seasonal_events_forced_halloween",
+				ui_name = seasonal_forced_halloween_name,
+				ui_description = seasonal_forced_halloween_desc,
+				value_default = false,
+				---@diagnostic disable-next-line: undefined-global
+				scope = MOD_SETTING_SCOPE_NEW_GAME,
+			},
+			{
+				id = "seasonal_events_forced_smissmass",
+				ui_name = seasonal_forced_smissmass_name,
+				ui_description = seasonal_forced_smissmass_desc,
+				value_default = false,
+				---@diagnostic disable-next-line: undefined-global
+				scope = MOD_SETTING_SCOPE_NEW_GAME,
+			}
+		}
+	})
 end
 
 if HasFlagPersistent( "apotheosis_card_unlocked_secret_knowledge_of_kings" ) then
-  table.insert(mod_settings,
-  {
-    id = "secret_golden_cape",
-    ui_name = secret_golden_cape_name,
-    ui_description = secret_golden_cape_desc,
-    value_default = true,
-    ---@diagnostic disable-next-line: undefined-global
-    scope = MOD_SETTING_SCOPE_NEW_GAME,
-  })
+	table.insert(mod_settings,
+	{
+		id = "secret_golden_cape",
+		ui_name = secret_golden_cape_name,
+		ui_description = secret_golden_cape_desc,
+		value_default = true,
+		---@diagnostic disable-next-line: undefined-global
+		scope = MOD_SETTING_SCOPE_NEW_GAME,
+	})
 end
 
 --[[
-  --Conga: This is by all means functional, until the sounds are played; at which point they're immediately told to be paused until the game is unpaused.
-  --I'm assuming this is something that must be changed in Fmod studio, but I see zero documentation on what audio tag the game is asking for
+	--Conga: This is by all means functional, until the sounds are played; at which point they're immediately told to be paused until the game is unpaused.
+	--I'm assuming this is something that must be changed in Fmod studio, but I see zero documentation on what audio tag the game is asking for
 do -- Cat Button
-  table.insert(mod_settings,
-    {
-      id = "cat_button",
-      ui_name = "",
-      ui_fn = function(mod_id, gui, in_main_menu, im_id, setting)
-          if not in_main_menu then
-                GuiLayoutBeginHorizontal(gui, 0, 0, false, 6, 6)
-                GuiOptionsAddForNextWidget(gui, 28)
-                GuiOptionsAddForNextWidget(gui, 4)
-                GuiOptionsAddForNextWidget(gui, 6)
-                local lmb, rmb = GuiImageButton(gui, im_id, 0, 0, "", "data/ui_gfx/animal_icons/cat_mocreeps_spoopy_skittle.png")
-                GuiTooltip(gui, "Cat", "")
-                if lmb then
-                    dofile_once("mods/apotheosis/files/scripts/magic/cat_random_sound.lua")
-                    CatMeow( GameGetCameraPos())
-                end
-                if rmb then
-                    GamePlaySound( "mods/Apotheosis/mocreeps_audio.bank", "mocreeps_audio/kittycat/sora_sneeze_01", GameGetCameraPos() )
-                end
-              GuiLayoutEnd(gui)
-              GuiIdPop(gui)
-          else    -- In main menu warning
-              GuiImage(gui, im_id, 0, 0, "data/ui_gfx/inventory/icon_warning.png", 1, 1, 1)
-          end
-      end
-    }
-  )
+	table.insert(mod_settings,
+		{
+			id = "cat_button",
+			ui_name = "",
+			ui_fn = function(mod_id, gui, in_main_menu, im_id, setting)
+					if not in_main_menu then
+								GuiLayoutBeginHorizontal(gui, 0, 0, false, 6, 6)
+								GuiOptionsAddForNextWidget(gui, 28)
+								GuiOptionsAddForNextWidget(gui, 4)
+								GuiOptionsAddForNextWidget(gui, 6)
+								local lmb, rmb = GuiImageButton(gui, im_id, 0, 0, "", "data/ui_gfx/animal_icons/cat_mocreeps_spoopy_skittle.png")
+								GuiTooltip(gui, "Cat", "")
+								if lmb then
+										dofile_once("mods/Apotheosis/files/scripts/magic/cat_random_sound.lua")
+										CatMeow( GameGetCameraPos())
+								end
+								if rmb then
+										GamePlaySound( "mods/Apotheosis/mocreeps_audio.bank", "mocreeps_audio/kittycat/sora_sneeze_01", GameGetCameraPos() )
+								end
+							GuiLayoutEnd(gui)
+							GuiIdPop(gui)
+					else		-- In main menu warning
+							GuiImage(gui, im_id, 0, 0, "data/ui_gfx/inventory/icon_warning.png", 1, 1, 1)
+					end
+			end
+		}
+	)
 end
 ]]--
 
@@ -331,27 +533,30 @@ end
 --Inserted to guarantee it always loads at the bottom of the settings list
 table.insert(mod_settings,
 {
-  id = "credits",
-  ui_name = "\n \n \nCredits: \nConga Lyne - Mod Creator, anything not specifically listed here was made by me \n \nSorako Hinoguchi - Voicing Cats \n \nSpoopy (The One The Only Spoopy Boi#7859) - Creating fluffy cat sprites \nCreating Size 3 Blob Sprites, Creating Size 4 Blob static Sprite, Creating Size 5 Blob Idle Animation \n \nSquirrelly#6472 - Created the mana drain effect lua script, your mana wouldn't be stolen without their help \n \nBlueberry#1414 - Translating the mod to Russian\n \nExtol#0629 - Helping getting translation keys working, needed for custom perks to show up correctly \nAlso helped make split shot significantly less game breaking \n \nZathers - creator of nxml.lua, a file required for pixel scenes to work with mod compatability for me. \n \nHorscht#6086 - Helping a ton with getting code working, including the toxic worm nest structure to spawn in the world, \nand all others as a result. \n \nRib#1963 - Help with stain UV map generation, I probably wouldn't be able to have UV maps for enemies without his help \n \nKeithSammut - Provided base scripts needed for ceiling enemies \n \nCopi (Human#6606) - Helping think up some enemy ideas for unused sprites I had lying around. \n \nAnd you, for giving Apotheosis a try \nI hope you enjoyed playing it as much as I enjoyed making it <3",
-  not_setting = true,
+	id = "credits",
+	ui_name = "\n \n \nCredits: \nConga Lyne - Mod Creator, anything not specifically listed here was made by me \n \nSorako Hinoguchi - Voicing Cats \n \nSpoopy (The One The Only Spoopy Boi#7859) - Creating fluffy cat sprites \nCreating Size 3 Blob Sprites, Creating Size 4 Blob static Sprite, Creating Size 5 Blob Idle Animation \n \nSquirrelly#6472 - Created the mana drain effect lua script, your mana wouldn't be stolen without their help \n \nBlueberry#1414 - Translating the mod to Russian\n \nExtol#0629 - Helping getting translation keys working, needed for custom perks to show up correctly \nAlso helped make split shot significantly less game breaking \n \nZathers - creator of nxml.lua, a file required for pixel scenes to work with mod compatability for me. \n \nHorscht#6086 - Helping a ton with getting code working, including the toxic worm nest structure to spawn in the world, \nand all others as a result. \n \nRib#1963 - Help with stain UV map generation, I probably wouldn't be able to have UV maps for enemies without his help \n \nKeithSammut - Provided base scripts needed for ceiling enemies \n \nCopi (Human#6606) - Helping think up some enemy ideas for unused sprites I had lying around. \n \nAnd you, for giving Apotheosis a try \nI hope you enjoyed playing it as much as I enjoyed making it <3",
+	not_setting = true,
 })
 ]]--
 
 
+-- This is called on each scope, like when unpausing, on new game, on init, etc
 function ModSettingsUpdate( init_scope )
-    ---@diagnostic disable-next-line: undefined-global
+	---@diagnostic disable-next-line: undefined-global
 	local old_version = mod_settings_get_version( mod_id )
-    ---@diagnostic disable-next-line: undefined-global
+	---@diagnostic disable-next-line: undefined-global
 	mod_settings_update( mod_id, mod_settings, init_scope )
 end
 
+-- This counts the amount of settings? I think...
 function ModSettingsGuiCount()
-    ---@diagnostic disable-next-line: undefined-global
+	---@diagnostic disable-next-line: undefined-global
 	return mod_settings_gui_count( mod_id, mod_settings )
 end
 
+-- This is called each gui-frame, and actually renders the GUI
 function ModSettingsGui( gui, in_main_menu )
-    ---@diagnostic disable-next-line: undefined-global
+	---@diagnostic disable-next-line: undefined-global
 	mod_settings_gui( mod_id, mod_settings, gui, in_main_menu )
 end
 
